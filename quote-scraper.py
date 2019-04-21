@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from csv import writer
+from csv import DictWriter
 from time import sleep
 
 base_url = 'http://quotes.toscrape.com/'
@@ -26,4 +26,14 @@ while url:
     url = next_btn.find('a')['href'] if next_btn else None
     
     # waits two seconds before requesting again - (must be a ninja and not draw attention)
-    sleep(2)
+    #sleep(2)
+
+def write_quotes(quotes):
+    with open('quotes.csv', 'w') as file:
+        headers = ['text', 'author', 'bio-link']
+        csv_writer = DictWriter(file, fieldnames=headers)
+        csv_writer.writeheader()
+        for quote in quotes:
+            csv_writer.writerow(quote)
+
+write_quotes(quote_list)
