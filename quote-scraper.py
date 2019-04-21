@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from csv import writer
-
+from time import sleep
 
 base_url = 'http://quotes.toscrape.com/'
 url = '/page/1'
@@ -24,5 +24,6 @@ while url:
     #Grab next url to scrape - set it to url
     next_btn = soup.find(class_='next')
     url = next_btn.find('a')['href'] if next_btn else None
-
-print(quote_list)
+    
+    # waits two seconds before requesting again - (must be a ninja and not draw attention)
+    sleep(2)
